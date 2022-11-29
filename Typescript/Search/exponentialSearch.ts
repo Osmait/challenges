@@ -33,8 +33,3 @@ export function exponentialSearch(
   }
   return binaruSearch(arr, value, i / 2, Math.min(i, length));
 }
-const arr = [2, 3, 4, 10, 40, 65, 78, 100];
-const value = 78;
-const result = exponentialSearch(arr, arr.length, value);
-
-console.log(result);
