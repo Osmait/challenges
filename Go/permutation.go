@@ -2,35 +2,30 @@ package main
 
 import "fmt"
 
-func permutations(arr []int) [][]int {
-	var helper func([]int, int)
-	res := [][]int{}
+var res [][]int
 
-	helper = func(arr []int, n int) {
-		if n == 1 {
-			tmp := make([]int, len(arr))
-			copy(tmp, arr)
-			res = append(res, tmp)
-		} else {
-			for i := 0; i < n; i++ {
-				helper(arr, n-1)
-				if n%2 == 1 {
-					tmp := arr[i]
-					arr[i] = arr[n-1]
-					arr[n-1] = tmp
-				} else {
-					tmp := arr[0]
-					arr[0] = arr[n-1]
-					arr[n-1] = tmp
-				}
-			}
+func permute(nums []int) [][]int {
+	res = make([][]int, 0)
+	n := len(nums)
+	var backTrack func(int)
+	backTrack = func(first int) {
+		if first == n {
+			temp := make([]int, n)
+			copy(temp, nums)
+			res = append(res, temp)
+		}
+		for i := first; i < n; i++ {
+			nums[first], nums[i] = nums[i], nums[first]
+			backTrack(first + 1)
+			nums[first], nums[i] = nums[i], nums[first]
 		}
 	}
-	helper(arr, len(arr))
+
+	backTrack(0)
 	return res
 }
 
 func main() {
-	p := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	fmt.Println(permutations(p))
+	p := []int{1, 2, 3}
+	fmt.Println(permute(p))
 }
